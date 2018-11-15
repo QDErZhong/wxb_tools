@@ -1,0 +1,41 @@
+<html>
+<head>
+<script>
+function loadXMLDoc() {
+  var xmlhttp;
+  try{
+    var word = document.getElementById("query").value;
+    var lan = document.getElementById("le").value;
+  } catch {
+    var word = '';
+    var lan = 'eng';
+  }
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      document.getElementById('content').innerHTML = xmlhttp.responseText;
+      $.getScript('./script/add.js');
+      $.getScript('./script/result-min.js');
+      $.getScript('./script/autocomplete_json.js');
+    }
+  };
+  xmlhttp.open("GET", './test.php?q='+word+'&to='+lan, true);
+  xmlhttp.send();
+}
+loadXMLDoc();
+</script>
+<link rel="stylesheet" href="./css/result-min.css">
+<link rel="stylesheet" href="./css/pad.css">
+<link rel="stylesheet" href="./css/result-ugc.css">
+<script src="./script/jquery.min.js"></script>
+<!--<script src="./script/add.js"></script>
+<script type="text/javascript" src="./script/result-min.js"></script>
+<script type="text/javascript" src="./script/autocomplete_json.js"></script>
+--><body>
+<div id="content"></div>
+</body>
+</html>

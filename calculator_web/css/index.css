@@ -1,0 +1,115 @@
+.bottom {
+	width: 960px;
+	margin: auto;
+	text-align: center;
+}
+
+.box {
+	width: 960px;
+	height: 560px;
+	//border: 5px solid #474747;
+	margin:auto;
+	margin-bottom: 20px;
+	margin-top: 100px;
+	position: relative;
+}
+
+.top {
+	width: 100%;
+	height: 50px;
+	background-color: black;
+}
+
+.screen {
+	top: 50px;
+	width: 97%;
+	height: 100px;
+//	background-color: #28ff28;
+	//border: 3px solid black;
+	//border-radius: 5px;
+	margin: 20px auto;
+	position: relative;
+}
+
+.input {
+	text-align: right;
+	font-size: 50px;
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+}
+
+.keyboard {
+	position: absolute;
+	top: 175px;
+	left: 0px;
+}
+
+.btn {
+	width: 100px;
+	height: 50px;
+	line-height: 50px;
+	margin: 10px;
+	border-radius: 5px;
+	text-align: center;
+	cursor: pointer;
+	color: #fff;
+	user-select:none;
+	position: absolute;
+}
+
+.black {
+	background: linear-gradient(to bottom, #161616 0%, #2f2f2f 100%);
+	border: 1px solid #090909;
+	//box-shadow: 0px 4px 0px 0px #090909, 0px 5px 12px 0px rgba(0, 0, 0, 0.6), inset 0px 0px 10px -5px #000000;
+}
+
+.black:hover {
+	background: linear-gradient(to bottom, #161616 0%, #222222 100%);
+}
+
+.black:hover:active {
+	border: none;
+}
+
+.orange {
+	background: orange;
+	//border: 1px solid #5cda8f;
+	//box-shadow: 0px 4px 0px 0px #5cda8f, 0px 5px 12px 0px rgba(0, 0, 0, 0.6), inset 0px 0px 10px -5px #000000;
+}
+
+.orange:hover {
+	background: linear-gradient(to bottom, #70df9e 0%, #85e3ac 100%);
+}
+
+.orange:hover:active {
+	border: none;
+}
+
+.blue {
+	background: #333;
+	//border: 1px solid #5db5b8;
+	//box-shadow: 0px 4px 0px 0px #5db5b8, 0px 5px 12px 0px rgba(0, 0, 0, 0.6), inset 0px 0px 10px -5px #000000;
+}
+
+.blue:hover {
+	background: linear-gradient(to bottom, #6fbdbf 0%, #80c5c7 100%);
+}
+
+.blue:hover:active {
+	border: none;
+}
+
+.red {
+	background: linear-gradient(to bottom, #c03718 0%, #e44a27 100%);
+	//border: 1px solid #a93115;
+	//box-shadow: 0px 4px 0px 0px #a93115, 0px 5px 12px 0px rgba(0, 0, 0, 0.6), inset 0px 0px 10px -5px #000000;
+}
+
+.red:hover {
+	background: linear-gradient(to bottom, #c03718 0%, #d73e1b 100%);
+}
+
+.red:hover:active {
+	border: none;
+}

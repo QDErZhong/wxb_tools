@@ -1,0 +1,25 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+<script src="./main.js"></script>
+</head>
+<body>
+<div>
+<input type="checkbox" id="c1" checked="checked">待审</input>
+<input type="checkbox" id="c2" >已审</input>
+</div>
+<div>
+<select id="refresh" onchange="display()">
+</select>
+<button onclick="getpath()">刷新</button>
+<button onclick="pass()">已审</button>
+</div>
+<br />
+<div>
+<table border="1">
+<tbody id="content">
+</tbody>
+</table>
+</div>
+</body>
+</html>

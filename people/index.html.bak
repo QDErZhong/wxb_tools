@@ -1,0 +1,113 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./../jquery.min.js"></script>
+<script>
+//functions
+function loadXMLDoc(id,link){
+    var xmlhttp;
+    if (window.XMLHttpRequest){
+        xmlhttp=new XMLHttpRequest();
+    }
+    else{
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function(){
+        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+            document.getElementById(id).innerHTML=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.open("GET",link,true);
+    xmlhttp.send();
+}
+
+function select(i){
+    $("#"+selected).css("background-color","white");
+    $("#"+selected).css("color","black");
+    if(selected!=i){
+        selected=i;
+        $("#"+selected).css("background-color","blue");
+        $("#"+selected).css("color","white");
+    }
+    else{
+        selected=-1;
+    }
+}
+function show(){
+    var p=10*page+selected;
+    if(selected!=-1){
+        loadXMLDoc("content","getxml.php?method=show&type="+place+"&page="+p);
+        $("table").hide();
+    }
+}
+function pageset(i){
+    if(page+i>=0&&page+i<=9){
+        page+=i;
+        selected=-1;
+        loadXMLDoc("selections","getxml.php?method=table&type="+place+"&page="+page);
+    }
+    pagenum();
+}
+function pagenum(){
+    $("#pagenum").html(page+1);
+}
+function back(){
+    document.getElementById("content").innerHTML="";
+    $("table").show();
+}
+function switcher(c){
+    if(c==place) return;
+    loadXMLDoc("selections","getxml.php?method=table&type="+c+"&page=0");
+    page=0;
+    place=c;
+    if(c=="china") cnameselect=0;
+    if(c=="world") cnameselect=1;
+    pagenum();
+    countryname();
+}
+function countryname(){
+    $("#country").html(cname[cnameselect]);
+}
+
+</script>
+<script>
+var page=0;
+var selected=-1;
+var place="china";
+var cname=["国内新闻","国际新闻"];
+var cnameselect=0;
+loadXMLDoc("selections","getxml.php?method=table&type=china&page="+page);
+</script>
+<style>
+    table,table tr th, table tr td { border:1px solid; }
+    table { width: 300px; min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse; padding:2px;}
+    table,table tr th,table tr td.noborder{border-top:0px solid}
+    tr {width:300px;height:55px;}
+
+</style>
+</head>
+<body>
+<table>
+<tbody id="selections">
+</tbody>
+</table>
+<table>
+<tbody>
+    <tr style="height:30px;">
+    <td class="noborder"><button onclick="pageset(-1);">上一页</button></td>
+    <td class="noborder" style="width:50px"><p id="pagenum">1</p></td>
+    <td class="noborder"><button onclick="pageset(1);">下一页</button></td>
+    </tr>
+    <tr style="height:30px;">
+    <td><button onclick="switcher('china');">国内新闻</button></td>
+    <td><p id="country">国内新闻</p></td>
+    <td><button onclick="switcher('world');">国际新闻</button></td>
+    </tr>
+    <tr style="height:30px;">
+    <td colspan="3"><button onclick="show();">打开</button></td>
+    </tr>
+</tbody>
+</table>
+<p id="content" />
+</body>
+</html>
