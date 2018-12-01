@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算器</title>
+	<link rel="stylesheet" href="index.css">
+	<link rel="icon" href="./icon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="./icon.ico" type="image/x-icon" />
+</head>
+<body>
+	<div style="height: 50px;" />
+	<section class="wrapper horizontal" style="position: absolute; top: 70px;">
+		<div class="result-text">0</div>
+		<div class="keyboard-box">
+			<div class="keyboard-special">
+				<div class="keyboard-item" onClick="main.clickSpecial('1')">x<sup>2</sup></div>
+				<div class="keyboard-item" onClick="main.clickSpecial('2')">x<sup>3</sup></div>
+				<div class="keyboard-item" onClick="main.clickSpecial('3',this)">x<sup>y</sup></div>
+				<div class="keyboard-item" onClick="main.clickSpecial('4')">10<sup>x</sup></div>
+				<div class="keyboard-item" onClick="main.clickSpecial('5')">1/x</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('6')">
+					<span class="radic-span">&radic;</span><span class="radic-number radic-number-2">x</span>
+				</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('7')">
+					<span class="radic-span">&radic;</span><span class="radic-number radic-number-3">x</span>
+				</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('8',this)">
+					<span class="radic-span">&radic;</span><span class="radic-number radic-number-y">x</span>
+				</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('9')">sin</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('10')">cos</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('11')">tan</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('12')">e</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('13')">sinh</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('14')">cosh</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('15')">tanh</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('16')">π</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('17')">x!</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('18')">ln</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('19')">
+					<span class="log-span">log</span>
+				</div>
+				<div class="keyboard-item" onClick="main.clickSpecial('20')">exp</div>
+			</div>
+			<div class="keyboard-normal">
+				<div class="keyboard-item reg-btn" onClick="main.reset()">AC</div>
+				<div class="keyboard-item" onClick="main.clickOperat('+/-')">+/-</div>
+				<div class="keyboard-item" onClick="main.clickOperat('--')">←</div>
+				<div class="keyboard-item orange" onClick="main.clickOperat('/',this)">÷</div>
+				<div class="keyboard-item" onClick="main.clickNumber('7')">7</div>
+				<div class="keyboard-item" onClick="main.clickNumber('8')">8</div>
+				<div class="keyboard-item" onClick="main.clickNumber('9')">9</div>
+				<div class="keyboard-item orange" onClick="main.clickOperat('*',this)">×</div>
+				<div class="keyboard-item" onClick="main.clickNumber('4')">4</div>
+				<div class="keyboard-item" onClick="main.clickNumber('5')">5</div>
+				<div class="keyboard-item" onClick="main.clickNumber('6')">6</div>
+				<div class="keyboard-item orange" onClick="main.clickOperat('-',this)">-</div>
+				<div class="keyboard-item" onClick="main.clickNumber('1')">1</div>
+				<div class="keyboard-item" onClick="main.clickNumber('2')">2</div>
+				<div class="keyboard-item" onClick="main.clickNumber('3')">3</div>
+				<div class="keyboard-item orange" onClick="main.clickOperat('+',this)">+</div>
+				<div class="keyboard-item large" onClick="main.clickNumber('0')">0</div>
+				<div class="keyboard-item" onClick="main.clickNumber('.')">.</div>
+				<div class="keyboard-item orange" onClick="main.clickEqual()">=</div>
+			</div>
+		</div>
+	</section>
+
+	<div style="color: white;text-align: center;position: absolute;bottom: 0px;width: 100%;">科学计算器 from Github. Modified by QDErZhong</div>
+
+	<script src="./math.min.js"></script>
+	<script src="index.js"></script>
+</body>
+</html>
