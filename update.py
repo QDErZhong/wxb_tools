@@ -42,6 +42,9 @@ def getimg(page,types):
 def getpath(types):
     files = os.listdir('./people/'+types)
     return './people/' + types + '/' + str(len(files)) + '.jpg'
+'''
+url="http://60.205.217.184:2334/wp-admin/export.php?download=true"
+page=urlopen(url)'''
 
 url="http://www.people.com.cn/rss/politics.xml"
 page=urlopen(url)

@@ -1,0 +1,25 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="calc.js"></script>
+<link rel="stylesheet" type="text/css" href="calc.css">
+<link rel="stylesheet" type="text/css" href="body.css">
+<div id="body" style="position:relative; margin-top:120px; left:80px;">
+
+</div>
+<script>
+window.onresize=function()
+{
+	document.getElementById('body').style.width=document.body.offsetWidth-parseInt(document.getElementById('body').style.left);
+	document.getElementById('message').style.width=document.body.offsetWidth-parseInt(document.getElementById('message').style.left);
+};
+window.onload=function(){calc_init(document.getElementById('body'));window.onresize();};
+
+</script>
+<div style="position:relative; left:80px;" id="message">
+1.计算原理:使用了纯天然的eval进行计算(我比较懒2333（补充：容易出奇怪的问题）<br>
+2.如何打出右括号:长按或右键"()"键<br>
+3.如何计算x的n次方:首先按"方"这个按钮,然后按x然后按","然后按n,然后按右括号,例如2的3次方:"方"->"2"->","->"3"->")"->"="<br>
+4.为啥不能开x的n次根号:JS里没有这个函数(2333<br>
+5.为啥这么丑:<del>对，就是丑</del> <a href="http://juruoyun.top">蒟蒻云</a>招美工<br>
+6.BUG反馈:访问 http://www.juruoyun.top/mywork/mainpages/bugreport.php ，或直接找（审美奇特的）<strong>火星大王</strong><br>
+</div>
+<div style="text-align:center; width:100%;">Made by <strong>火星大王</strong></div>
