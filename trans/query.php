@@ -3,7 +3,7 @@ include './phpQuery/phpQuery.php';
 $word = $_GET['q'];
 $language = $_GET['to'];
 phpQuery::newDocumentFile('http://dict.youdao.com/w/'.$language.'/'.$word.'/');
-if($word==''){
+if($word==''||$word=='王海华'){
   pq('#container')->remove();
 }
 pq('#nav')->remove();

@@ -1,57 +1,73 @@
-from urllib import urlopen
-import re, os
+from urllib.request import urlopen
+import re, os, json
 
-#get weather
-url = "https://www.tianqiapi.com/api/?version=v1&city=%E9%9D%92%E5%B2%9B"
-page = urlopen(url)
-with open("./weather/weather.txt","w") as f:
-    f.write(page.read())
-imgurl = "http://www.tianqiapi.com/api.php?style=ts&city=%e9%9d%92%e5%b2%9b"
-page = urlopen(imgurl)
-regex = re.compile("\"\./.*?\"")
-links = regex.findall(page.read())
-for i in range(0,3):
-    links[i] = "http://www.tianqiapi.com"+links[i][2:-1]
-for i in range(0,3):
-    with open("./weather/image/"+str(i)+".png","wb") as f:
-        png = urlopen(links[i])
-        f.write(png.read())
+with open('config.json',mode='r',encoding='utf-8') as f:
+    conf = json.load(f)
 
-#get people's daily
-ls = os.listdir('./people/politics')
-for i in ls:
-    os.remove(os.path.join('./people/politics/', i))
-ls = os.listdir('./people/world')
-for i in ls:
-    os.remove(os.path.join('./people/world/', i))
+def preDir():
+    tomake = [conf['wbase'],os.path.join(conf['wbase'],conf['weather']['imgcache']),conf['rssbase']]
+    for rss in conf['rss']:
+        tomake.append(os.path.join(conf['rssbase'],rss['imgcache']))
+    for i in tomake:
+        try:
+            os.mkdir(i)
+        except Exception as err:
+            pass
 
-def getimg(page,types):
-    thispage = page
-    for i in re.findall('<img .*?src=".*?"', page) + re.findall('<IMG .*?src=".*?"', page):
-        print(i)
-        src = re.search('src=".*?"', i).group()[5 : -1]
-        if src[0] == '/':
-            src = 'http://www.people.com.cn' + src
-        path = getpath(types)
-        with open(path, 'wb') as f:
-            f.write(urlopen(src).read())
-        replaced = re.sub('src=".*?"', 'src="./tools'+path[1:]+'"', i)
-        thispage = re.sub(i, replaced, thispage)
-    return thispage
-        
-def getpath(types):
-    files = os.listdir('./people/'+types)
-    return './people/' + types + '/' + str(len(files)) + '.jpg'
-'''
-url="http://60.205.217.184:2334/wp-admin/export.php?download=true"
-page=urlopen(url)'''
+def getWeather():
+    with urlopen(conf['weather']['uri']) as page:
+        with open(os.path.join(conf['wbase'],conf['weather']['cache']),'wb') as f:
+            f.write(page.read())
+    with urlopen(conf['weather']['imguri']) as page:
+        regex = re.compile("\"\./.*?\"")
+        links = regex.findall(page.read().decode())
+        for i in range(0,3):
+            links[i] = conf['weather']['base']+links[i][2:-1]
+        for i in range(0,3):
+            with open(os.path.join(conf['wbase'],conf['weather']['imgcache'],"%d.png"%i),"wb") as f:
+                with urlopen(links[i]) as img:
+                    f.write(img.read())
 
-url="http://www.people.com.cn/rss/politics.xml"
-page=urlopen(url)
-with open("./people/politics.xml","w") as f:
-    f.write(getimg(page.read(), 'politics'))
-url="http://www.people.com.cn/rss/world.xml"
-page=urlopen(url)
-with open("./people/world.xml","w") as f:
-    f.write(getimg(page.read(), 'world'))
-print "Done."
+#clear cache
+def clearAssets():
+    for rss in conf['rss']:
+        ls = os.listdir(os.path.join(conf['rssbase'],rss['imgcache']))
+        for i in ls:
+            os.remove(os.path.join(conf['rssbase'],rss['imgcache'], i))
+
+
+def getRSS():
+    for rss in conf['rss']:
+        with urlopen(rss['uri']) as page:
+            thispage = page.read().decode()
+            for imgsrc in re.findall('<[imgIMG]+.*?[srcSRC]+=[\'\"](.*?)[\'\"].*?>', thispage):
+                try:
+                    print('Raw src',imgsrc)
+                    imgpath = os.path.join(conf['rssbase'],rss['imgcache'],imgsrc.split('?')[0].split('/')[-1])
+                    src=imgsrc
+                    if src[0] == '/':
+                        src = rss['base'] + src
+                
+                    print('Converted',src)
+                    print('Local',imgpath)
+                    if not '.' in imgpath:
+                        raise(Exception())
+                    with open(imgpath, 'wb') as f:
+                        f.write(urlopen(src).read())
+                    
+                    thispage = thispage.replace(imgsrc,os.path.join(conf['cdir'],imgpath)
+)
+                except Exception as err:
+                    print('Skip')
+            with open(os.path.join(conf['rssbase'],rss['cache']),mode='w',encoding='utf-8') as f:
+                f.write(thispage)
+
+if __name__ == "__main__":
+    preDir()
+    print('Dir Prepared')
+    clearAssets()
+    print('Assets Cleared')
+    getWeather()
+    print('Weather Got')
+    getRSS()
+    print("Done.")
