@@ -40,27 +40,28 @@ def getRSS():
     for rss in conf['rss']:
         with urlopen(rss['uri']) as page:
             thispage = page.read().decode()
-            for imgsrc in re.findall('<[imgIMG]+.*?[srcSRC]+=[\'\"](.*?)[\'\"].*?>', thispage):
-                try:
-                    print('Raw src',imgsrc)
-                    imgpath = os.path.join(conf['rssbase'],rss['imgcache'],imgsrc.split('?')[0].split('/')[-1])
-                    src=imgsrc
-                    if src[0] == '/':
-                        src = rss['base'] + src
+            if rss['cache'] != "qdaily.xml":
+                for imgsrc in re.findall('<[imgIMG]+.*?[srcSRC]+=[\'\"](.*?)[\'\"].*?>', thispage):
+                    try:
+                        print('Raw src',imgsrc)
+                        imgpath = os.path.join(conf['rssbase'],rss['imgcache'],imgsrc.split('?')[0].split('/')[-1])
+                        src=imgsrc
+                        if src[0] == '/':
+                            src = rss['base'] + src
                 
-                    print('Converted',src)
-                    print('Local',imgpath)
-                    if not '.' in imgpath:
-                        raise(Exception())
-                    with open(imgpath, 'wb') as f:
-                        f.write(urlopen(src).read())
+                        print('Converted',src)
+                        print('Local',imgpath)
+                        if not '.' in imgpath:
+                            raise(Exception())
+                        with open(imgpath, 'wb') as f:
+                            f.write(urlopen(src).read())
                     
-                    thispage = thispage.replace(imgsrc,os.path.join(conf['cdir'],imgpath)
+                        thispage = thispage.replace(imgsrc,os.path.join(conf['cdir'],imgpath)
 )
-                except Exception as err:
-                    print('Skip')
+                    except Exception as err:
+                        print('Skip')
             with open(os.path.join(conf['rssbase'],rss['cache']),mode='w',encoding='utf-8') as f:
-                f.write(thispage)
+                    f.write(thispage)
 
 if __name__ == "__main__":
     preDir()
