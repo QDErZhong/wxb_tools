@@ -2,6 +2,7 @@
 	$xml=new DOMDocument("1.0","utf-8");
 	$poll=$xml->createElement("poll");
 	$xml->appendChild($poll);
+	cpa($poll,"time",date("Y-m-d H:i:s"));
 	cpa($poll,"grade",$_POST["grade"]);
 	cpa($poll,"class",$_POST["MT"].$_POST["class"]);
 	cpa($poll,"person",$_POST["personal"]);
